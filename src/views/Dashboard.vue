@@ -8,6 +8,7 @@
           <v-btn
             text
             color="blue-grey darken-3"
+            :to="'/project/' + project.id"
           >
             Gerenciar
           </v-btn>

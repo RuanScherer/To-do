@@ -25,7 +25,7 @@
           <v-list-item to="/dashboard">
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
-          <v-list-item v-for="project in projects" :key="project.id">
+          <v-list-item v-for="project in projects" :key="project.id" :to="'/project/' + project.id">
             <v-list-item-title>{{ project.name }}</v-list-item-title>
           </v-list-item>
 
