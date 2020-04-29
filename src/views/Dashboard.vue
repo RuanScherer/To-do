@@ -1,61 +1,15 @@
 <template>
   <div class="d-flex flex-wrap">
-    <v-col cols="6" class="pa-2">
+    <v-col v-for="project in projects" :key="project.id" cols="4" class="pa-2">
       <v-card elevation="2" class="pa-2">
-        <v-card-title>Projeto</v-card-title>
-        <v-card-subtitle>Subtítulo</v-card-subtitle>
-        <v-card-text>Descrição</v-card-text>
+        <v-card-title>{{ project.name }}</v-card-title>
+        <v-card-text>{{ project.description }}</v-card-text>
         <v-card-actions>
           <v-btn
             text
             color="blue-grey darken-3"
           >
-            Learn More
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-    <v-col cols="6" class="pa-2">
-      <v-card elevation="2" class="pa-2">
-        <v-card-title>Projeto</v-card-title>
-        <v-card-subtitle>Subtítulo</v-card-subtitle>
-        <v-card-text>Descrição</v-card-text>
-        <v-card-actions>
-          <v-btn
-            text
-            color="blue-grey darken-3"
-          >
-            Learn More
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-    <v-col cols="6" class="pa-2">
-      <v-card elevation="2" class="pa-2">
-        <v-card-title>Projeto</v-card-title>
-        <v-card-subtitle>Subtítulo</v-card-subtitle>
-        <v-card-text>Descrição</v-card-text>
-        <v-card-actions>
-          <v-btn
-            text
-            color="blue-grey darken-3"
-          >
-            Learn More
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-    <v-col cols="6" class="pa-2">
-      <v-card elevation="2" class="pa-2">
-        <v-card-title>Projeto</v-card-title>
-        <v-card-subtitle>Subtítulo</v-card-subtitle>
-        <v-card-text>Descrição</v-card-text>
-        <v-card-actions>
-          <v-btn
-            text
-            color="blue-grey darken-3"
-          >
-            Learn More
+            Gerenciar
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -64,7 +18,19 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-  name: "Dashboard"
+  name: "Dashboard",
+  data: () => {
+    return {
+      projects: null
+    }
+  },
+  async mounted() {
+    await axios.get('http://localhost:8000/api/projects')
+      .then( response => { this.projects = response.data.projects } )
+      .catch( (error) => { this.projects = error } )
+  }
 }
 </script>
