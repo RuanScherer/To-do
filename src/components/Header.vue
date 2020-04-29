@@ -22,18 +22,11 @@
         <v-list-item-group
           active-class="deep-purple--text text--accent-4"
         >
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon>mdi-home</v-icon>
-            </v-list-item-icon>
+          <v-list-item to="/dashboard">
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Account</v-list-item-title>
+          <v-list-item v-for="project in projects" :key="project.id">
+            <v-list-item-title>{{ project.name }}</v-list-item-title>
           </v-list-item>
 
         </v-list-item-group>
@@ -43,10 +36,18 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: "Header",
   data: () => ({
-    drawer: false
-  })
+    drawer: false,
+    projects: null
+  }),
+  async mounted() {
+    await axios.get('http://localhost:8000/api/projects')
+      .then( (response) => { this.projects = response.data.projects} )
+      .catch( (error) => { this.projects = error } )
+  }
 }
 </script>
