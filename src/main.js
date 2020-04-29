@@ -19,9 +19,10 @@ const routes = [
     component: Dashboard
   },
   { 
-    path: '/project',
+    path: '/project/:id',
     name: 'Project',
-    component: Project
+    component: Project,
+    props: true
   }
 ]
 
