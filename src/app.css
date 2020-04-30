@@ -58,6 +58,7 @@
 * {
   text-decoration: none;
   color: var(--dark);
+  outline: none !important;
 }
 
 .radius {
