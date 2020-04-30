@@ -8,10 +8,18 @@
   color: #007bff;
 }
 
-.btn-primary-smoof:hover {
-  background-color: rgba(0, 123, 255, 0.2);
-  border-color: rgba(0, 123, 255, 0.2);
-  color: #007bff;
+.btn-primary-smoof:hover, .btn-primary-smoof:focus {
+  background-color: rgba(0, 123, 255, 0.2) !important;
+  border-color: rgba(0, 123, 255, 0.2) !important;
+  color: #007bff !important;
+}
+
+.btn:focus {
+  box-shadow: 0 0 0 0 transparent !important;
+}
+
+.btn:active {
+  animation: touch 0.1s;
 }
 
 .btn:hover:not(.btn-primary-smoof), .card-elevate:hover {
@@ -30,4 +38,16 @@
 
 .radius {
   border-radius: 20px
+}
+
+@keyframes touch {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
