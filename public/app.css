@@ -1,0 +1,33 @@
+:root {
+  background-color: var(--light)
+}
+
+.btn-primary-smoof {
+  background-color: rgba(0, 123, 255, 0.15);
+  border-color: rgba(0, 123, 255, 0.15);
+  color: #007bff;
+}
+
+.btn-primary-smoof:hover {
+  background-color: rgba(0, 123, 255, 0.2);
+  border-color: rgba(0, 123, 255, 0.2);
+  color: #007bff;
+}
+
+.btn:hover:not(.btn-primary-smoof), .card-elevate:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.btn:hover, .card-elevate:hover {
+  transition: 0.2s;
+}
+
+* {
+  text-decoration: none;
+  color: var(--dark);
+}
+
+.radius {
+  border-radius: 20px
+}
