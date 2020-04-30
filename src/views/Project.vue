@@ -1,11 +1,6 @@
 <template>
   <div class="container py-4">
-    <section class="card shadow-sm radius">
-      <div class="card-body text-center">
-        <h3 class="card-title">{{ project.name }}</h3>
-        <h5 class="card-subtitle text-secondary">{{ project.description }}</h5>
-      </div>
-    </section>
+    <MainCard :title="project.name" :subtitle="project.description" :buttons="buttons" :id="id"></MainCard>
     <section class="card shadow-sm radius mt-3">
       <div class="card-body d-flex flex-wrap">
         <router-link class="btn btn-primary rounded-pill btn-primary-smoof w-100 mx-3 mb-2" to="/task/new">Nova tarefa</router-link>
@@ -30,22 +25,30 @@
 
 <script>
 import axios from 'axios'
+import MainCard from '../components/MainCard.vue'
 
 export default {
   name: "Project",
+  components: {
+    MainCard
+  },
   props: ['id'],
   data: () => {
     return {
       project: null,
       tasks: null,
-    }
-  },
-  methods: {
-    remove: async (evt) => {
-      console.log(evt)
-      //await axios.delete(`http://localhost:8000/api/tasks/${this.id}`)
-      //  .then( (response) => { this.tasks = response.data.task } )
-      //  .catch( (error) => { this.tasks = error } )
+      buttons: [
+        {
+          title: "Editar",
+          link: `/project/edit/`,
+          theme: "info"
+        },
+        {
+          title: "Remover",
+          link: `/project/delete/`,
+          theme: "danger"
+        }
+      ]
     }
   },
   async mounted() {
