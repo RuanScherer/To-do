@@ -1,38 +1,41 @@
 <template>
-  <div>
-    <v-app-bar
-      color="deep-blue-grey darken-3"
-      dark
-    >
-      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container"> 
+      <h1 class="navbar-brand">To do</h1>
+      <button 
+        class="navbar-toggler" 
+        type="button" 
+        data-toggle="collapse" 
+        data-target="#navbarSupportedContent" 
+        aria-controls="navbarSupportedContent" 
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-      <v-toolbar-title>To do</v-toolbar-title>
-    </v-app-bar>
-
-    <v-navigation-drawer
-      v-model="drawer"
-      temporary
-      fixed
-      elevate-on-scroll
-    >
-      <v-list
-        nav
-        dense
-      >
-        <v-list-item-group
-          active-class="deep-purple--text text--accent-4"
-        >
-          <v-list-item to="/dashboard">
-            <v-list-item-title>Home</v-list-item-title>
-          </v-list-item>
-          <v-list-item v-for="project in projects" :key="project.id" :to="'/project/' + project.id">
-            <v-list-item-title>{{ project.name }}</v-list-item-title>
-          </v-list-item>
-
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
-  </div>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard">Dashboard</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a 
+              class="nav-link dropdown-toggle" 
+              href="#" 
+              id="navbarDropdown" 
+              role="button" 
+              data-toggle="dropdown" 
+              aria-haspopup="true" 
+              aria-expanded="false">
+              Seus projetos
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" v-for="project in projects" :key="project.id" :href="'/project/' + project.id">{{ project.name }}</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 </template>
 
 <script>
@@ -41,13 +44,13 @@ import axios from 'axios'
 export default {
   name: "Header",
   data: () => ({
-    drawer: false,
     projects: null
   }),
   async mounted() {
     await axios.get('http://localhost:8000/api/projects')
       .then( (response) => { this.projects = response.data.projects} )
       .catch( (error) => { this.projects = error } )
+    console.log(this.projects)
   }
 }
 </script>

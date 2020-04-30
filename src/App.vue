@@ -1,11 +1,11 @@
 <template>
-  <v-app>
+  <div>
     <Header></Header>
 
-    <v-content class="pa-3 blue-grey lighten-5">
+    <div class="pa-3 bg-light">
       <router-view></router-view>
-    </v-content>
-  </v-app>
+    </div>
+  </div>
 </template>
 
 <script>
