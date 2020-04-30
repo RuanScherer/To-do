@@ -6,7 +6,7 @@
       <router-link 
         v-for="button in buttons" 
         :key="button.title" 
-        :class="'btn btn-' + button.theme + '-smoof rounded-pill align-self-center m-1'" 
+        :class="'btn btn-' + button.theme + '-smoof no-elevate rounded-pill align-self-center m-1'" 
         :to="button.link + id">
         {{ button.title }}
       </router-link>

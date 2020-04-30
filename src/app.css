@@ -46,7 +46,7 @@
   animation: touch 0.1s;
 }
 
-.btn:hover:not(.btn-primary-smoof):not(.btn-info-smoof):not(.btn-danger-smoof), .card-elevate:hover {
+.btn:hover:not(.no-elevate), .card-elevate:hover {
   transform: translateY(-3px);
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 }
