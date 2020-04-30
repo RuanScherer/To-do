@@ -29,7 +29,7 @@
               Seus projetos
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" v-for="project in projects" :key="project.id" :href="'/project/' + project.id">{{ project.name }}</a>
+              <router-link class="dropdown-item" v-for="project in projects" :key="project.id" :to="'/project/' + project.id">{{ project.name }}</router-link>
             </div>
           </li>
         </ul>
@@ -50,7 +50,6 @@ export default {
     await axios.get('http://localhost:8000/api/projects')
       .then( (response) => { this.projects = response.data.projects} )
       .catch( (error) => { this.projects = error } )
-    console.log(this.projects)
   }
 }
 </script>
