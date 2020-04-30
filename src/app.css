@@ -14,6 +14,30 @@
   color: #007bff !important;
 }
 
+.btn-info-smoof {
+  background-color: rgba(23, 162, 184, 0.15);
+  border-color: rgba(23, 162, 184, 0.15);
+  color: #17a2b8;
+}
+
+.btn-info-smoof:hover, .btn-info-smoof:focus {
+  background-color: rgba(23, 162, 184, 0.2) !important;
+  border-color: rgba(23, 162, 184, 0.2) !important;
+  color: #17a2b8 !important;
+}
+
+.btn-danger-smoof {
+  background-color: rgba(220, 53, 69, 0.15);
+  border-color: rgba(220, 53, 69, 0.15);
+  color: #dc3545;
+}
+
+.btn-danger-smoof:hover, .btn-danger-smoof:focus {
+  background-color: rgba(220, 53, 69, 0.2) !important;
+  border-color: rgba(220, 53, 69, 0.2) !important;
+  color: #dc3545 !important;
+}
+
 .btn:focus {
   box-shadow: 0 0 0 0 transparent !important;
 }
@@ -22,7 +46,7 @@
   animation: touch 0.1s;
 }
 
-.btn:hover:not(.btn-primary-smoof), .card-elevate:hover {
+.btn:hover:not(.btn-primary-smoof):not(.btn-info-smoof):not(.btn-danger-smoof), .card-elevate:hover {
   transform: translateY(-3px);
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 }
