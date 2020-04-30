@@ -1,9 +1,22 @@
 <template>
   <div class="container py-4">
-    <MainCard :title="project.name" :subtitle="project.description" :buttons="buttons" :id="id"></MainCard>
+    <MainCard 
+      :title="project.name" 
+      :subtitle="project.description" 
+      :buttons="buttons" 
+      :id="id">
+    </MainCard>
+    <DeleteModal 
+      id="deleteTaskModal" 
+      title="Remover tarefa"
+      text="Tem certeza que deseja remover a tarefa?"
+      action="delete-task"
+      buttonText="Sim, remover"
+      v-on:delete-task="deleteTask()">
+    </DeleteModal>
     <section class="card shadow-sm radius mt-3">
       <div class="card-body d-flex flex-wrap">
-        <router-link class="btn btn-primary rounded-pill btn-primary-smoof w-100 mx-3 mb-2" to="/task/new">Nova tarefa</router-link>
+        <router-link class="btn btn-primary rounded-pill btn-primary-smoof no-elevate w-100 mx-3 mb-2" to="/task/new">Nova tarefa</router-link>
         <article 
           class="col-md-4 p-3" 
           v-for="task in tasks" 
@@ -14,7 +27,13 @@
               <h5 class="card-subtitle text-secondary mb-2">{{ task.description }}</h5>
               <router-link class="btn btn-primary rounded-pill align-self-center m-1" :to="/task/ + task.id">Marcar como concluído</router-link>
               <router-link class="btn btn-info rounded-pill align-self-center m-1" :to="/task/ + task.id">Editar</router-link>
-              <router-link class="btn btn-danger rounded-pill align-self-center m-1" :to="/task/ + task.id">Remover</router-link>
+              <button 
+                class="btn btn-danger rounded-pill align-self-center m-1" 
+                v-on:click="setTaskToDelete(task.id)"
+                data-toggle="modal" 
+                data-target="#deleteTaskModal">
+                Remover
+              </button>
             </div>
           </div>
         </article>
@@ -26,11 +45,13 @@
 <script>
 import axios from 'axios'
 import MainCard from '../components/MainCard.vue'
+import DeleteModal from '../components/DeleteModal.vue'
 
 export default {
   name: "Project",
   components: {
-    MainCard
+    MainCard,
+    DeleteModal
   },
   props: ['id'],
   data: () => {
@@ -48,7 +69,25 @@ export default {
           link: `/project/delete/`,
           theme: "danger"
         }
-      ]
+      ],
+      taskToDelete: null,
+      deleteStatus: false
+    }
+  },
+  methods: {
+    setTaskToDelete: function(value) {
+      this.taskToDelete = value
+    },
+    deleteTask: function() {
+      axios.delete(`http://localhost:8000/api/tasks/${this.taskToDelete}`)
+        .then( (response) => { 
+          if(response.data.status == "success") {
+            this.deleteStatus = false
+          } else {
+            this.deleteStatus = true
+          }
+        } )
+        .catch( () => { this.deleteStatus = true } )
     }
   },
   async mounted() {
