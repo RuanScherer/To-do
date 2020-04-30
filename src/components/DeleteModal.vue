@@ -9,7 +9,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <p>Tem certeza que deseja remover a tarefa?</p>
+          <p>{{ text }}</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-link-dark no-elevate m-1" data-dismiss="modal">Fechar</button>
@@ -23,7 +23,7 @@
 <script>
 export default {
   name: "DeleteModal",
-  props: ['id', 'title', 'action', 'buttonText'],
+  props: ['id', 'title', 'text', 'action', 'buttonText'],
   methods: {
     call: function() {
       this.$emit(this.action)
