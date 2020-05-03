@@ -13,7 +13,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-link-dark no-elevate m-1" data-dismiss="modal">Fechar</button>
-          <button type="button" class="btn btn-danger rounded-pill m-1" v-on:click="call()">{{ buttonText }}</button>
+          <button type="button" class="btn btn-danger rounded-pill m-1" data-dismiss="modal" v-on:click="call()">{{ buttonText }}</button>
         </div>
       </div>
     </div>
