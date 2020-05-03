@@ -16,7 +16,10 @@
     </DeleteModal>
     <section class="card shadow-sm radius mt-3">
       <div class="card-body d-flex flex-wrap">
-        <router-link class="btn btn-primary rounded-pill btn-primary-smoof no-elevate w-100 mx-3 mb-2" to="/task/new">Nova tarefa</router-link>
+        <div class="d-flex justify-content-between mb-2 px-3 w-100">
+          <router-link class="btn btn-primary rounded-pill btn-primary-smoof no-elevate" to="/task/new">Nova tarefa</router-link>
+          <button class="btn btn-primary rounded-pill btn-primary-smoof no-elevate" v-on:click="updateTasks()">Atualizar</button>
+        </div>
         <article 
           class="col-md-4 p-3" 
           v-for="task in tasks" 
@@ -88,15 +91,19 @@ export default {
           }
         } )
         .catch( () => { this.deleteStatus = true } )
+      this.updateTasks()
+    },
+    updateTasks: async function() {
+      await axios.get(`http://localhost:8000/api/tasks/project/${this.id}`)
+        .then( (response) => { this.tasks = response.data.task } )
+        .catch( (error) => { this.tasks = error } )
     }
   },
   async mounted() {
     await axios.get(`http://localhost:8000/api/projects/${this.id}`)
       .then( async (response) => {
         this.project = response.data.project
-        await axios.get(`http://localhost:8000/api/tasks/project/${this.id}`)
-          .then( (response) => { this.tasks = response.data.task } )
-          .catch( (error) => { this.tasks = error } )
+        this.updateTasks()
       } )
       .catch( (error) => { this.project = error } )
   }
