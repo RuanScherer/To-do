@@ -24,19 +24,21 @@
           class="col-md-4 p-3" 
           v-for="task in tasks" 
           :key="task.id">
-          <div class="card card-elevate radius">
-            <div class="card-body text-center">
+          <div class="card card-elevate radius h-100">
+            <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
               <h3 class="card-title">{{ task.name }}</h3>
               <h5 class="card-subtitle text-secondary mb-2">{{ task.description }}</h5>
-              <router-link class="btn btn-primary rounded-pill align-self-center m-1" :to="/task/ + task.id">Marcar como concluído</router-link>
-              <router-link class="btn btn-info rounded-pill align-self-center m-1" :to="/task/ + task.id">Editar</router-link>
-              <button 
-                class="btn btn-danger rounded-pill align-self-center m-1" 
-                v-on:click="setTaskToDelete(task.id)"
-                data-toggle="modal" 
-                data-target="#deleteTaskModal">
-                Remover
-              </button>
+              <div class="d-flex flex-wrap justify-content-center">
+                <router-link class="btn btn-primary rounded-pill align-self-center m-1" :to="/task/ + task.id">Marcar como concluído</router-link>
+                <router-link class="btn btn-info rounded-pill align-self-center m-1" :to="/task/ + task.id">Editar</router-link>
+                <button 
+                  class="btn btn-danger rounded-pill align-self-center m-1" 
+                  v-on:click="setTaskToDelete(task.id)"
+                  data-toggle="modal" 
+                  data-target="#deleteTaskModal">
+                  Remover
+                </button>
+              </div>
             </div>
           </div>
         </article>
