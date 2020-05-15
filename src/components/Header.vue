@@ -25,11 +25,18 @@
               role="button" 
               data-toggle="dropdown" 
               aria-haspopup="true" 
-              aria-expanded="false">
+              aria-expanded="false"
+              @click="getProjects" >
               Seus projetos
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <router-link class="dropdown-item" v-for="project in projects" :key="project.id" :to="'/project/' + project.id">{{ project.name }}</router-link>
+              <router-link 
+                class="dropdown-item" 
+                v-for="project in projects" 
+                :key="project.id" 
+                :to="'/overview/' + project.id">
+                {{ project.name }}
+              </router-link>
             </div>
           </li>
         </ul>
@@ -46,10 +53,12 @@ export default {
   data: () => ({
     projects: null
   }),
-  async mounted() {
-    await axios.get('http://localhost:8000/api/projects')
+  methods: {
+    async getProjects() {
+      await axios.get('https://ruanscherer-todo.herokuapp.com/project/all')
       .then( (response) => { this.projects = response.data.projects} )
       .catch( (error) => { this.projects = error } )
+    }
   }
 }
 </script>
