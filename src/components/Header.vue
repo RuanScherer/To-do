@@ -15,7 +15,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="/dashboard">Dashboard</a>
+            <router-link class="nav-link" to="/dashboard">Dashboard</router-link>
           </li>
           <li class="nav-item dropdown">
             <a 
@@ -33,8 +33,8 @@
               <router-link 
                 class="dropdown-item" 
                 v-for="project in projects" 
-                :key="project.id" 
-                :to="'/overview/' + project.id">
+                :key="project._id" 
+                :to="'/overview/' + project._id">
                 {{ project.name }}
               </router-link>
             </div>
