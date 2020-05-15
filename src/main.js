@@ -5,6 +5,7 @@ import Dashboard from './views/Dashboard.vue'
 import Overview from './views/Project/Overview.vue'
 import Create from './views/Create.vue'
 import CreateProject from './views/Project/Create.vue'
+import CreateTask from './views/Task/Create.vue'
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,10 @@ const routes = [
       {
         path: 'project',
         component: CreateProject
+      },
+      {
+        path: 'task',
+        component: CreateTask
       }
     ]
 
