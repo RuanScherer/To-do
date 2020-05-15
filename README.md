@@ -1,4 +1,7 @@
-# to-do
+# To-do
+
+## Overview
+	This is a simple to-do app created in Vue.js. Contains projects and tasks management.
 
 ## Project setup
 ```
@@ -14,16 +17,3 @@ yarn run serve
 ```
 yarn run build
 ```
-
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
