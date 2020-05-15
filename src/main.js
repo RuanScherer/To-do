@@ -6,6 +6,8 @@ import Overview from './views/Project/Overview.vue'
 import Create from './views/Create.vue'
 import CreateProject from './views/Project/Create.vue'
 import CreateTask from './views/Task/Create.vue'
+import Edit from './views/Edit.vue'
+import EditProject from './views/Project/Edit.vue'
 
 Vue.use(VueRouter)
 
@@ -36,7 +38,16 @@ const routes = [
         component: CreateTask
       }
     ]
-
+  },
+  {
+    path: '/edit/',
+    component: Edit,
+    children: [
+      {
+        path: 'project/:id',
+        component: EditProject
+      }
+    ]
   }
 ]
 
