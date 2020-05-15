@@ -36,7 +36,7 @@
     </DeleteModal>
     <section class="card shadow-sm radius mt-3">
       <div class="card-body d-flex flex-wrap">
-        <div class="d-flex justify-content-between mb-2 px-3 w-100">
+        <div class="d-flex flex-column align-items-center flex-md-row justify-content-md-between mb-2 px-3 w-100">
           <div class="form-group">
             <select 
               class="form-control rounded-pill" 
@@ -61,7 +61,20 @@
               <h3 class="card-title">{{ task.name }}</h3>
               <h5 class="card-subtitle text-secondary mb-2">{{ task.description }}</h5>
               <div class="d-flex flex-wrap justify-content-center">
-                <router-link class="btn btn-primary rounded-pill align-self-center m-1" :to="/task/ + task.id">Marcar como concluído</router-link>
+                <button 
+                  class="btn btn-primary rounded-pill align-self-center m-1" 
+                  v-if="task.complete == false"
+                  :key="'setAsFinished-' + task._id"
+                  @click="setAsFinished(task._id)">
+                  Marcar como concluído
+                </button>
+                <button 
+                  class="btn btn-dark rounded-pill align-self-center m-1" 
+                  v-else
+                  :key="'setAsFinished-' + task._id"
+                  @click="setAsUnfinished(task._id)">
+                  Marcar como não concluído
+                </button>
                 <router-link class="btn btn-info rounded-pill align-self-center m-1" :to="'/edit/task/' + task._id">Editar</router-link>
                 <button 
                   class="btn btn-danger rounded-pill align-self-center m-1" 
@@ -138,6 +151,16 @@ export default {
             .catch( (error) => { this.tasks = error } )
           break
       }
+    },
+    async setAsUnfinished(taskId) {
+      await axios.put(`https://ruanscherer-todo.herokuapp.com/task/update/${taskId}`, { complete: false })
+        .then( () => { this.updateTasks() } )
+        .catch( () => { this.updateTasks() } )
+    },
+    async setAsFinished(taskId) {
+      await axios.put(`https://ruanscherer-todo.herokuapp.com/task/update/${taskId}`, { complete: true })
+        .then( () => { this.updateTasks() } )
+        .catch( () => { this.updateTasks() } )
     }
   },
   async mounted() {
