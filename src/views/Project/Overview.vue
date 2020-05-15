@@ -2,9 +2,21 @@
   <div class="container py-4">
     <MainCard 
       :title="project.name" 
-      :subtitle="project.description" 
-      :buttons="buttons" 
+      :subtitle="project.description"
       :id="id">
+      <template #buttons>
+        <router-link
+          class="'btn btn-info-smoof no-elevate rounded-pill align-self-center m-1'" 
+          :to="'/edit/project/' + id">
+          Editar
+        </router-link>
+        <button
+          class="'btn btn-info-smoof no-elevate rounded-pill align-self-center m-1'" 
+          data-toggle="modal" 
+          data-target="#deleteTaskModal">
+          Excluir
+        </button>
+      </template>
     </MainCard>
     <DeleteModal 
       id="deleteTaskModal" 
@@ -14,10 +26,18 @@
       buttonText="Sim, remover"
       v-on:delete-task="deleteTask()">
     </DeleteModal>
+    <DeleteModal 
+      id="deleteProjectModal" 
+      title="Excluir projeto"
+      text="Tem certeza que deseja excluir o projeto?"
+      action="delete-project"
+      buttonText="Sim, excluir"
+      v-on:delete-project="deleteProject()">
+    </DeleteModal>
     <section class="card shadow-sm radius mt-3">
       <div class="card-body d-flex flex-wrap">
         <div class="d-flex justify-content-between mb-2 px-3 w-100">
-          <router-link class="btn btn-primary rounded-pill btn-primary-smoof no-elevate" to="/task/new">Nova tarefa</router-link>
+          <router-link class="btn btn-primary rounded-pill btn-primary-smoof no-elevate" to="/new/task">Nova tarefa</router-link>
           <button class="btn btn-primary rounded-pill btn-primary-smoof no-elevate" v-on:click="updateTasks()">Atualizar</button>
         </div>
         <article 
@@ -33,7 +53,7 @@
                 <router-link class="btn btn-info rounded-pill align-self-center m-1" :to="/task/ + task.id">Editar</router-link>
                 <button 
                   class="btn btn-danger rounded-pill align-self-center m-1" 
-                  v-on:click="setTaskToDelete(task.id)"
+                  v-on:click="setTaskToDelete(task._id)"
                   data-toggle="modal" 
                   data-target="#deleteTaskModal">
                   Remover
@@ -83,8 +103,8 @@ export default {
     setTaskToDelete: function(value) {
       this.taskToDelete = value
     },
-    deleteTask: function() {
-      axios.delete(`https://ruanscherer-todo.herokuapp.com/task/destroy/${this.taskToDelete}`)
+    deleteProject: function() {
+      axios.delete(`https://ruanscherer-todo.herokuapp.com/project/destroy/}`)
         .then( (response) => { 
           if(response.data.status == "success") {
             this.deleteStatus = false
@@ -93,6 +113,12 @@ export default {
           }
         } )
         .catch( () => { this.deleteStatus = true } )
+      this.updateTasks()
+    },
+    deleteTask: function() {
+      axios.delete(`https://ruanscherer-todo.herokuapp.com/task/destroy/${this.taskToDelete}`)
+        .then( () => { this.updateTasks() } )
+        .catch( () => { this.updateTasks() } )
       this.updateTasks()
     },
     updateTasks: async function() {
