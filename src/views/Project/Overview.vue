@@ -65,14 +65,14 @@
                   class="btn btn-primary rounded-pill align-self-center m-1" 
                   v-if="task.complete == false"
                   :key="'setAsFinished-' + task._id"
-                  @click="setAsFinished(task._id)">
+                  @click="setCompleteAs(task._id, true)">
                   Marcar como concluído
                 </button>
                 <button 
                   class="btn btn-dark rounded-pill align-self-center m-1" 
                   v-else
                   :key="'setAsFinished-' + task._id"
-                  @click="setAsUnfinished(task._id)">
+                  @click="setCompleteAs(task._id, false)">
                   Marcar como não concluído
                 </button>
                 <router-link class="btn btn-info rounded-pill align-self-center m-1" :to="'/edit/task/' + task._id">Editar</router-link>
@@ -128,39 +128,31 @@ export default {
         .catch( () => { this.updateTasks() } )
       this.updateTasks()
     },
+    async setCompleteAs(taskId, status) {
+      await axios.put(`https://ruanscherer-todo.herokuapp.com/task/update/${taskId}`, { complete: status })
+        .then( () => { this.updateTasks() } )
+        .catch( () => { this.updateTasks() } )
+    },
+    async filterTasks(projectId, complement) {
+      await axios.get(`https://ruanscherer-todo.herokuapp.com/task/project/${projectId}/${complement}`)
+        .then( (response) => { this.tasks = response.data.tasks } )
+        .catch( (error) => { this.tasks = error } )
+    },
     updateTasks: async function() {
       switch(Number(this.filter)) {
         case 1:
-          await axios.get(`https://ruanscherer-todo.herokuapp.com/task/project/${this.id}`)
-            .then( (response) => { this.tasks = response.data.tasks } )
-            .catch( (error) => { this.tasks = error } )
+          this.filterTasks(this.id, "")
           break
         case 2:
-          await axios.get(`https://ruanscherer-todo.herokuapp.com/task/project/${this.id}/finished`)
-            .then( (response) => { this.tasks = response.data.tasks } )
-            .catch( (error) => { this.tasks = error } )
+          this.filterTasks(this.id, "finished")
           break
         case 3:
-          await axios.get(`https://ruanscherer-todo.herokuapp.com/task/project/${this.id}/unfinished`)
-            .then( (response) => { this.tasks = response.data.tasks } )
-            .catch( (error) => { this.tasks = error } )
+          this.filterTasks(this.id, "unfinished")
           break
         default:
-          await axios.get(`https://ruanscherer-todo.herokuapp.com/task/project/${this.id}`)
-            .then( (response) => { this.tasks = response.data.tasks } )
-            .catch( (error) => { this.tasks = error } )
+          this.filterTasks(this.id, "")
           break
       }
-    },
-    async setAsUnfinished(taskId) {
-      await axios.put(`https://ruanscherer-todo.herokuapp.com/task/update/${taskId}`, { complete: false })
-        .then( () => { this.updateTasks() } )
-        .catch( () => { this.updateTasks() } )
-    },
-    async setAsFinished(taskId) {
-      await axios.put(`https://ruanscherer-todo.herokuapp.com/task/update/${taskId}`, { complete: true })
-        .then( () => { this.updateTasks() } )
-        .catch( () => { this.updateTasks() } )
     }
   },
   async mounted() {
