@@ -6,14 +6,14 @@
       :id="id">
       <template #buttons>
         <router-link
-          class="'btn btn-info-smoof no-elevate rounded-pill align-self-center m-1'" 
+          class="btn btn-info btn-info-smoof no-elevate rounded-pill align-self-center m-1" 
           :to="'/edit/project/' + id">
           Editar
         </router-link>
         <button
-          class="'btn btn-info-smoof no-elevate rounded-pill align-self-center m-1'" 
+          class="btn btn-danger btn-danger-smoof no-elevate rounded-pill align-self-center m-1" 
           data-toggle="modal" 
-          data-target="#deleteTaskModal">
+          data-target="#deleteProjectModal">
           Excluir
         </button>
       </template>
@@ -104,15 +104,9 @@ export default {
       this.taskToDelete = value
     },
     deleteProject: function() {
-      axios.delete(`https://ruanscherer-todo.herokuapp.com/project/destroy/}`)
-        .then( (response) => { 
-          if(response.data.status == "success") {
-            this.deleteStatus = false
-          } else {
-            this.deleteStatus = true
-          }
-        } )
-        .catch( () => { this.deleteStatus = true } )
+      axios.delete(`https://ruanscherer-todo.herokuapp.com/project/destroy/${this.$route.params.id}`)
+        .then( () => { this.$router.replace("/dashboard") } )
+        .catch( () => {} )
       this.updateTasks()
     },
     deleteTask: function() {
