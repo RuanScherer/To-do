@@ -32,7 +32,7 @@
 				v-on:click.prevent="create()">
 				Criar projeto
 			</button>
-			<button class="btn btn-outline-danger rounded-pill">Cancelar</button>
+			<button class="btn btn-outline-danger rounded-pill" @click.prevent="back">Cancelar</button>
 		</form>
 	</section>
 </template>
@@ -54,6 +54,9 @@ export default {
 			axios.post("https://ruanscherer-todo.herokuapp.com/project/register", { name: this.name, description: this.description })
 				.then( () => { this.status = 1 } )
 				.catch( () => { this.status = 0 } )
+		},
+		back() {
+			this.$router.go(-1)
 		}
 	}
 }

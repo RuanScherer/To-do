@@ -45,8 +45,11 @@
 			</div>
 			<button 
 				type="submit" 
-				class="btn btn-primary rounded-pill"
-				@click.prevent="createTask">Criar tarefa</button>
+				class="btn btn-primary rounded-pill mr-2"
+				@click.prevent="createTask">
+				Criar tarefa
+			</button>
+			<button class="btn btn-outline-danger rounded-pill" @click.prevent="back">Cancelar</button>
 		</form>
 	</section>
 </template>
@@ -79,6 +82,9 @@ export default {
 					this.projects = error;
 					this.status = 0
 				} )
+		},
+		back() {
+			this.$router.go(-1)
 		}
 	},
 	async mounted() {
