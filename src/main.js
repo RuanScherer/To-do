@@ -2,26 +2,36 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import Dashboard from './views/Dashboard.vue'
-import Project from './views/Project.vue'
+import Overview from './views/Project/Overview.vue'
+import Create from './views/Create.vue'
+import CreateProject from './views/Project/Create.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   { 
     path: '/',
-    name: 'Home',
     component: Dashboard
   },
   { 
     path: '/dashboard',
-    name: 'Dashboard',
     component: Dashboard
   },
   { 
-    path: '/project/:id',
-    name: 'Project',
-    component: Project,
+    path: '/overview/:id',
+    component: Overview,
     props: true
+  },
+  {
+    path: '/new/',
+    component: Create,
+    children: [
+      {
+        path: 'project',
+        component: CreateProject
+      }
+    ]
+
   }
 ]
 
