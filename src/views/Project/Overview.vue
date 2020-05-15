@@ -24,7 +24,7 @@
       text="Tem certeza que deseja remover a tarefa?"
       action="delete-task"
       buttonText="Sim, remover"
-      v-on:delete-task="deleteTask()">
+      @delete-task="deleteTask()">
     </DeleteModal>
     <DeleteModal 
       id="deleteProjectModal" 
@@ -32,13 +32,25 @@
       text="Tem certeza que deseja excluir o projeto?"
       action="delete-project"
       buttonText="Sim, excluir"
-      v-on:delete-project="deleteProject()">
+      @delete-project="deleteProject()">
     </DeleteModal>
     <section class="card shadow-sm radius mt-3">
       <div class="card-body d-flex flex-wrap">
         <div class="d-flex justify-content-between mb-2 px-3 w-100">
-          <router-link class="btn btn-primary rounded-pill btn-primary-smoof no-elevate" to="/new/task">Nova tarefa</router-link>
-          <button class="btn btn-primary rounded-pill btn-primary-smoof no-elevate" v-on:click="updateTasks()">Atualizar</button>
+          <div class="form-group">
+            <select 
+              class="form-control rounded-pill" 
+              @change="updateTasks()"
+              v-model="filter">
+              <option value="1" selected>Todas</option>
+              <option value="2">Concluídas</option>
+              <option value="3">Não concluídas</option>
+            </select>
+          </div>
+          <div>
+            <router-link class="btn btn-primary rounded-pill btn-primary-smoof no-elevate mr-2" to="/new/task">Nova tarefa</router-link>
+            <button class="btn btn-primary rounded-pill btn-primary-smoof no-elevate" @click="updateTasks()">Atualizar</button>
+          </div>
         </div>
         <article 
           class="col-md-4 p-3" 
@@ -50,10 +62,10 @@
               <h5 class="card-subtitle text-secondary mb-2">{{ task.description }}</h5>
               <div class="d-flex flex-wrap justify-content-center">
                 <router-link class="btn btn-primary rounded-pill align-self-center m-1" :to="/task/ + task.id">Marcar como concluído</router-link>
-                <router-link class="btn btn-info rounded-pill align-self-center m-1" :to="/task/ + task.id">Editar</router-link>
+                <router-link class="btn btn-info rounded-pill align-self-center m-1" :to="'/edit/task/' + task._id">Editar</router-link>
                 <button 
                   class="btn btn-danger rounded-pill align-self-center m-1" 
-                  v-on:click="setTaskToDelete(task._id)"
+                  @click="setTaskToDelete(task._id)"
                   data-toggle="modal" 
                   data-target="#deleteTaskModal">
                   Remover
@@ -83,20 +95,8 @@ export default {
     return {
       project: null,
       tasks: null,
-      buttons: [
-        {
-          title: "Editar",
-          link: `/project/edit/`,
-          theme: "info"
-        },
-        {
-          title: "Remover",
-          link: `/project/delete/`,
-          theme: "danger"
-        }
-      ],
-      taskToDelete: null,
-      deleteStatus: false
+      filter: 1,
+      taskToDelete: null
     }
   },
   methods: {
@@ -116,9 +116,28 @@ export default {
       this.updateTasks()
     },
     updateTasks: async function() {
-      await axios.get(`https://ruanscherer-todo.herokuapp.com/task/project/${this.id}`)
-        .then( (response) => { this.tasks = response.data.tasks } )
-        .catch( (error) => { this.tasks = error } )
+      switch(Number(this.filter)) {
+        case 1:
+          await axios.get(`https://ruanscherer-todo.herokuapp.com/task/project/${this.id}`)
+            .then( (response) => { this.tasks = response.data.tasks } )
+            .catch( (error) => { this.tasks = error } )
+          break
+        case 2:
+          await axios.get(`https://ruanscherer-todo.herokuapp.com/task/project/${this.id}/finished`)
+            .then( (response) => { this.tasks = response.data.tasks } )
+            .catch( (error) => { this.tasks = error } )
+          break
+        case 3:
+          await axios.get(`https://ruanscherer-todo.herokuapp.com/task/project/${this.id}/unfinished`)
+            .then( (response) => { this.tasks = response.data.tasks } )
+            .catch( (error) => { this.tasks = error } )
+          break
+        default:
+          await axios.get(`https://ruanscherer-todo.herokuapp.com/task/project/${this.id}`)
+            .then( (response) => { this.tasks = response.data.tasks } )
+            .catch( (error) => { this.tasks = error } )
+          break
+      }
     }
   },
   async mounted() {
