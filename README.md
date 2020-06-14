@@ -33,10 +33,6 @@
 - Execute o comando `$ npm run serve` para iniciar a aplicação.
 - O endereço para acessar a aplicação estará informado no terminal após a inicialização.
 
-### Possíveis problemas ao preparar aplicação para uso
-#### Falha ao conectar com o banco de dados
-<p>Basta alterar os valores de `user` e `password` de acordo com as configurações do seu servidor MySQL e o valor de `database` para `coronastatus`. Isso acontece porque os dados de conexão com a base de dados estão defindos para uma base remota.</p>
-
 ### Aviso importante
 A API utilizada para todo o processamento dos dados está hospedada em um serivço gratuito do [Heroku](https://www.heroku.com/) e por isso pode estar indisponível após determinado tempo sem ser acessada.
 
