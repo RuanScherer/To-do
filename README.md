@@ -34,6 +34,6 @@
 - O endereço para acessar a aplicação estará informado no terminal após a inicialização.
 
 ### Aviso importante
-A API utilizada para todo o processamento dos dados está hospedada em um serivço gratuito do [Heroku](https://www.heroku.com/) e por isso pode estar indisponível após determinado tempo sem ser acessada.
+A API utilizada para todo o processamento dos dados está hospedada em um serviço gratuito do [Heroku](https://www.heroku.com/) e por isso pode estar indisponível após determinado tempo sem ser acessada.
 
 <p>Estou também no <a href="https://www.linkedin.com/in/ruan-scherer/">Linkedin</a>, conecte-se comigo! :rocket:</p>
